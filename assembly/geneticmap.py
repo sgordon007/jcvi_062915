@@ -98,6 +98,7 @@ def main():
         ('anchor', 'anchor scaffolds based on map'),
         ('rename', 'rename markers according to the new mapping locations'),
         ('header', 'rename lines in the map header'),
+        ('filterMST', 'copy of breakpoint to morph into filtering MST file'),
             )
     p = ActionDispatcher(actions)
     p.dispatch(globals())
