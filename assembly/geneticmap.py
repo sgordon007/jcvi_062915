@@ -417,7 +417,9 @@ def check_markers(a, b, maxdiff):
 
     if a.seqid != b.seqid:
         return END, None
-    diff = hamming_distance(a.genotype, b.genotype, ignore="-")
+    #diff = hamming_distance(a.genotype, b.genotype, ignore="-")
+    ### shouldn't this be U for missing data?
+    diff = hamming_distance(a.genotype, b.genotype, ignore="U")
     max_allowed = len(a) * maxdiff
     if diff <= max_allowed:
         return OK, None
@@ -493,22 +495,32 @@ def filterMST(args):
     good = []
     nsingletons = 0
     for i in xrange(1, len(data) - 1):
-        a = data[i]
-        left_label, left_rr = check_markers(data[i - 1], a, diff)
-        right_label, right_rr = check_markers(a, data[i + 1], diff)
-
-        if left_label == BREAK and right_label == BREAK:
-            nsingletons += 1
-            ### testing
-            pmark = data[i - 1]
-            cmark = a
-            nmark = data[i + 1]
-            print "\t".join(str(pmark))
-            print "\n"
-            print "\t".join(str(cmark))
-            print "\n"
-            print "\t".join(str(nmark))
-            print "\n ---- \n"
+        ac = data[i,0]
+        ap = data[i - 1, 0]
+        an = data[i + 1, 0]
+        
+        print ac
+        print "\n"
+        print ap
+        print "\n"
+        print an
+        print "\n"
+        
+        #left_label, left_rr = check_markers(data[i - 1], a, diff)
+        #right_label, right_rr = check_markers(a, data[i + 1], diff)
+        #
+        #if left_label == BREAK and right_label == BREAK:
+        #    nsingletons += 1
+        #    ### testing
+        #    pmark = data[i - 1]
+        #    cmark = a
+        #    nmark = data[i + 1]
+        #    print "\t".join(str(pmark))
+        #    print "\n"
+        #    print "\t".join(str(cmark))
+        #    print "\n"
+        #    print "\t".join(str(nmark))
+        #    print "\n ---- \n"
     #        continue
     #
     #    good.append(a)
