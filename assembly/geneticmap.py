@@ -508,7 +508,7 @@ def filterMST(args):
             print "\t".join(str(cmark))
             print "\n"
             print "\t".join(str(nmark))
-            print "\n"
+            print "\n ---- \n"
     #        continue
     #
     #    good.append(a)
