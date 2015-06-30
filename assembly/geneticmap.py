@@ -499,16 +499,21 @@ def filterMST(args):
 
         if left_label == BREAK and right_label == BREAK:
             nsingletons += 1
-            continue
-
-        good.append(a)
-
-    logging.debug("A total of {0} singleton markers removed.".format(nsingletons))
-
-    for a, b in pairwise(good):
-        label, rr = check_markers(a, b, diff)
-        if label == BREAK:
-            print "\t".join(str(x) for x in rr)
+            ### testing
+            pmark = data[i - 1]
+            cmark = a
+            nmark = data[i + 1]
+            print pmark + "\n" + cmark + "\n" + nmark + "\n"
+    #        continue
+    #
+    #    good.append(a)
+    #
+    #logging.debug("A total of {0} singleton markers removed.".format(nsingletons))
+    #
+    #for a, b in pairwise(good):
+    #    label, rr = check_markers(a, b, diff)
+    #    if label == BREAK:
+    #        print "\t".join(str(x) for x in rr)
 
 
 
