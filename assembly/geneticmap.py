@@ -468,5 +468,51 @@ def breakpoint(args):
             print "\t".join(str(x) for x in rr)
 
 
+def filterMST(args):
+    """
+    %prog filterMST mstmap.input > breakpoints.bed
+
+    Find scaffold breakpoints using genetic map. Use variation.vcf.mstmap() to
+    generate the input for this routine.
+    """
+    from jcvi.utils.iter import pairwise
+
+    p = OptionParser(breakpoint.__doc__)
+    p.add_option("--diff", default=.1, type="float",
+                 help="Maximum ratio of differences allowed [default: %default]")
+    opts, args = p.parse_args(args)
+
+    if len(args) != 1:
+        sys.exit(not p.print_help())
+
+    mstmap, = args
+    diff = opts.diff
+    data = MSTMap(mstmap)
+
+    # Remove singleton markers (avoid double cross-over)
+    good = []
+    nsingletons = 0
+    for i in xrange(1, len(data) - 1):
+        a = data[i]
+        left_label, left_rr = check_markers(data[i - 1], a, diff)
+        right_label, right_rr = check_markers(a, data[i + 1], diff)
+
+        if left_label == BREAK and right_label == BREAK:
+            nsingletons += 1
+            continue
+
+        good.append(a)
+
+    logging.debug("A total of {0} singleton markers removed.".format(nsingletons))
+
+    for a, b in pairwise(good):
+        label, rr = check_markers(a, b, diff)
+        if label == BREAK:
+            print "\t".join(str(x) for x in rr)
+
+
+
+
+
 if __name__ == '__main__':
     main()
