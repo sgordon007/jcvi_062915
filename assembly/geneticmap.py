@@ -503,11 +503,11 @@ def filterMST(args):
             pmark = data[i - 1]
             cmark = a
             nmark = data[i + 1]
-            print "\t".join(str(pmark)
+            print "\t".join(str(pmark))
             print "\n"
-            print "\t".join(str(cmark)
+            print "\t".join(str(cmark))
             print "\n"
-            print "\t".join(str(nmark)
+            print "\t".join(str(nmark))
             print "\n"
     #        continue
     #
